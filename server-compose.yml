@@ -1,0 +1,32 @@
+version: "3.9"
+name: pgadmin
+services:
+  pgadmin:
+    restart: unless-stopped
+    container_name: '${COMPOSE_PROJECT_NAME}_pga'
+    image: dpage/pgadmin4:8.4
+    ports:
+      - "5050:80"
+    volumes:
+      - ./bind/config_local.py:/pgadmin4/config_local.py
+      - ./bind/preferences.json:/pgadmin4/preferences.json
+      - ./bind/storage:/mnt/storage
+      - pgadmin_volume:/var/lib/pgadmin
+    environment:
+      - PGADMIN_CONFIG_ALLOW_SAVE_TUNNEL_PASSWORD=True
+      - PGADMIN_CONFIG_SERVER_MODE=True
+    env_file:
+      - pgadmin.env
+  db:
+    restart: unless-stopped
+    container_name: '${COMPOSE_PROJECT_NAME}_db'
+    build: ./image/db
+    ports:
+      - "5051:5432"
+      - "5052:22"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./bind/db:/var/lib/postgresql/data
+volumes:
+  pgadmin_volume:
