@@ -18,6 +18,7 @@ drwx------    3 pgadmin  root          4096 Apr  1 05:47 ..
 > docker exec --user root pgadmin_pga ls -al /var/lib/pgadmin/storage/postgres_example.com
 drwx------    3 pgadmin  root          4096 Apr  1 05:47 ..
 -rw-r--r--    1 pgadmin  root           419 Apr  1 06:20 pg-test
-```
+
 ### Start sshd ###
 > docker exec -t pgadmin_db bash -c "/usr/sbin/sshd -D"
+```
